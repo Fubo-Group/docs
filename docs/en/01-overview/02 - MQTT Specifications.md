@@ -2,7 +2,7 @@
 title: "MQTT Specifications"
 ---
 
-![Oasis Logo](../../images/oasis-logo.png)
+![Oasis Logo](../../../images/oasis-logo.png)
 https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=mqtt
 
 MQTT is an OASIS standard. The specification is managed by the OASIS MQTT Technical Committee.

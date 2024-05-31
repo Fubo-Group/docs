@@ -65,7 +65,7 @@ var client = mqtt.connect("mqtt://192.168.1.157:1883",options)
 
 but is usually set as part of the options. The options setting overrides the URL setting if both are present.
 
-## Options
+# Options
 There are many options that can be passed to the connect method and you can find them listed [here](https://www.npmjs.com/package/mqtt).
 
 In this tutorial I want to cover some of the most important and common ones that you need to be aware of.

@@ -29,7 +29,7 @@ MQTT makes it easy to encrypt messages using TLS and authenticate clients using 
 
 
 # MQTT Publish / Subscribe Architecture
-![](../../images/mqtt-publish-subscribe.png)
+![](../../../images/mqtt-publish-subscribe.png)
 
 
 # MQTT in Action

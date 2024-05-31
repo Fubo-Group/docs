@@ -8,11 +8,9 @@ The node.js MQTT client is an open source client that can be used for publishing
 ```sh
 npm install mqtt --save 
 
-# and
+# and To install the command line tools
 npm install mqtt -g
 ```
-
-To install the command line tools
 
 Documentation for the client is available [here](https://www.npmjs.com/package/mqtt#store)
 
@@ -21,7 +19,7 @@ In this tutorial we cover the important client functions and create a simple pub
 To use the client you need to use:
 
 ```js
-var mqtt=require('mqtt');
+const mqtt=require('mqtt');
 ```
 
 at the top of your script.
@@ -39,13 +37,13 @@ This is the main method, and when called it connects to an MQTT broker and retur
 The method is called as follows:
 
 ```js
-var client = mqtt.connect(url,options)
+const client = mqtt.connect(url, options);
 ```
 e..g.
 
 ```js
-var client = mqtt.connect("mqtt://192.168.1.157",options)
-var client = mqtt.connect("mqtt://192.168.1.157",{clientId:"mqttjs01"})
+const client = mqtt.connect("mqtt://broker.fubogroup.com:1833", options)
+const client = mqtt.connect("mqtt://broker.fubogroup.com:1833", { clientId: "mqttjs01" })
 ```
 
 Usually they are many options that need to be passed to the method and so the options is usually created as a JavaScript object. E.G.
@@ -53,11 +51,12 @@ Usually they are many options that need to be passed to the method and so the op
 To use user name and password authentication and a clean session use the following options.
 
 ```js
-options={
-clientId:"mqttjs01",
-username:"steve",
-password:"password",
-clean:true};
+options = {
+	clientId:"mqttjs01",
+	username:"steve",
+	password:"password",
+	clean:true
+};
 ```
 
 The **MQTT protocol** acknowledges a connection with the **CONNACK** message.
@@ -65,30 +64,35 @@ The **MQTT protocol** acknowledges a connection with the **CONNACK** message.
 This raises the **on_connect** event in the client which can be examined by creating a listener as follows:
 
 ```js
-client.on("connect",function(){	
-console.log("connected");
+client.on("connect", function() {	
+	console.log("connected");
+});
 ```
 
 The listener waits for the connect event and calls a callback function; which in the example simply prints a message when the client connects.
 
 We can now try our first example script.
 
-
 This script connects to the broker.fubogroup.com MQTT broker and prints a message when connected.
 
 ```js
-var mqtt    = require('mqtt');
-var client  = mqtt.connect("mqtt://broker.fubogroup.com",{clientId:"mqttjs01"});
-client.on("connect",function(){	
-console.log("connected");
-})
+const mqtt = require('mqtt');
+
+const clientId = 'fubo' + Math.random().toString(16).substring(2, 8);
+
+const client = mqtt.connect('mqtt://127.0.0.1:1883', {
+  clientId,
+});
+
+client.on('connect', (response) => {
+    console.log(`connected ${client.connected}`);
+    console.log(response);
+});
 ```
 
 The Interesting thing to note is that the cursor of the command prompt is on a new line and blinking.
 
-
-
-simple-connect-node-script
+![simple-connect-node-script](../../../images/mqtt-connect.png)
 
 
 This is because the client is **still connected** to the broker and is sitting in an **event loop**.
@@ -136,9 +140,9 @@ If the error detects an authentication failure then you will need to quit otherw
 Therefore the on_error event listener should be something like the one below:
 
 ```js
-client.on("error",function(error){
-console.log("Can't connect" + error);
-process.exit(1)});
+client.on('error', (error) => {
+    console.log(`Can't connect ${error}`);
+});
 ```
 
 # Publishing Messages
@@ -231,7 +235,7 @@ client.on('message',function(topic, message, packet){
 });
 ```
 
-The callback needs to accept three parameters.-topic,message and packet.
+The callback can accept three parameters. `topic`, `message` and `packet`.
 
 The packet object contains the message,topic and message details like QOS,retain etc.
 
@@ -361,16 +365,21 @@ Notice how the certificate file is first read and passed as an option.
 
 If you are also using client certificates then use the following:
 
+```js
 var KEY = fs.readFileSync(‘client-certs\\client.key’);
 var CERT = fs.readFileSync(‘client-certs\\client.crt’);
+```
 
 and in options:
 
+```js
 key: KEY,
 cert: CERT,
+```
 
 Here is a working connect SSL example script:
 
+```js
 //https://github.com/mqttjs/MQTT.js/issues/264
 var mqtt    = require('mqtt');
 const fs = require('fs');
@@ -398,4 +407,6 @@ console.log("connected flag  " + client.connected);
 client.on("connect",function(){	
 console.log("connected  "+ client.connected);
 })
+```
+
 See Github reference for more details
